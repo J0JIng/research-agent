@@ -37,9 +37,6 @@ class ChromaVectorDB(BaseVectorDB):
         self.collection_name = collection_name
         self.filepath = filepath
         
-        #TODO - need to store UUID of each chunk for update and delete operation. 
-        # self.uuids = set()  
-
         self.client = PersistentClient(path=self.filepath)
         self.collection = self.client.get_or_create_collection(name=self.collection_name)
         self.create()
