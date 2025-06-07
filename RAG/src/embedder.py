@@ -1,27 +1,46 @@
+from abc import ABC, abstractmethod
 from dotenv import load_dotenv
+
 from langchain_openai import OpenAIEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 
-# load_dotenv()
-
-# # Initialize the embedding model
-# embeddings_model = OpenAIEmbeddings()
-
-# # Embed a list of strings
-# texts = ["This is the first document.", "This is the second document."]
-# embeddings = embeddings_model.embed_documents(texts)
-# print(f"Number of embeddings: {len(embeddings)}")
-# print(f"Length of the first embedding: {len(embeddings[0])}")
-
-# # Embed a single string
-# query = "What is the meaning of life?"
-# query_embedding = embeddings_model.embed_query(query)
-# print(f"Length of the query embedding: {len(query_embedding)}")
-# print(f"embedding: {query_embedding}")
-
-class Embedder:
-    def __init__(self, model):
-        self.model = model 
-
-    def embed_documents(self):
+class BaseEmbeddingModel(ABC):
+    @abstractmethod
+    def embed_documents(self, documents: list[str]): 
+        pass    
+    
+    @abstractmethod
+    def embed_query(self, query: str): 
         pass
-        
+
+class OpenAIEmbeddingModel(BaseEmbeddingModel):
+    def __init__(self, model: str = "text-embedding-3-small"):
+        self.model = OpenAIEmbeddings(model=model)
+
+    def embed_documents(self, documents: list[str]) -> list[list[float]]:
+        return self.model.embed_documents(documents)
+
+    def embed_query(self, query: str) -> list[float]:
+        return self.model.embed_query(query)
+
+class HuggingfaceEmbeddingModel(BaseEmbeddingModel):
+    def __init__(self, model: str = "minishlab/potion-multilingual-128M"):
+        self.model = HuggingFaceEmbeddings(model=model)
+
+    def embed_documents(self, documents: list[str]) -> list[list[float]]:
+        return self.model.embed_documents(documents)
+
+    def embed_query(self, query: str) -> list[float]:
+        return self.model.embed_query(query)
+
+if __name__ == "__main__":
+    # Initialize the embedding model
+    load_dotenv()
+    openAImodel = OpenAIEmbeddingModel()
+    embedding = openAImodel.embed_query("Apple")
+    print(f"open ai embedding model dimension: {len(embedding)}")
+    
+    huggingfacemodel = HuggingfaceEmbeddingModel()
+    embedding = huggingfacemodel.embed_query("Apple")
+    print(f"huggingface embedding model dimension: {len(embedding)}")
+    
