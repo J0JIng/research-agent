@@ -3,6 +3,7 @@ langchain
 langchain-community
 langchain-openai
 langchain-huggingface
+langchain-chroma>=0.1.2
 pydantic
 pymupdf
 langdetect
