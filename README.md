@@ -14,17 +14,6 @@ This architecture leverages the strengths of different retrieval modalities (e.g
 - **Explainability**: Tracks sources and citations for transparency.
 - **Use of LangGraph (or similar frameworks)**: Enables flexible orchestration of agents into directed workflows.
 
-## Project Structure
-
-`research-agent/
-├── agent/ # Agent implementations (research, retrieval, summarization, etc.)
-├── tool_RAG/ # Tools for RAG (vector retrieval, embedding, document processing)
-├── tool_knowledge_graph_RAG/ # Tools for KG-based retrieval and reasoning
-├── main.py # Entry point to run or test the agent workflows
-├── requirements.txt # Python dependencies
-├── README.md # This file`
-
-
 ## How It Works
 
 - User input is received by a Research Agent which breaks down the query into subtasks.
