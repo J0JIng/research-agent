@@ -90,5 +90,6 @@ class ChromaVectorDB(BaseVectorDB):
             print(f"Exception in querying documents: {e}")
 
 if __name__ == "__main__":
-    embedding = OpenAIEmbeddings()
-    db = ChromaVectorDB(embedding, "research_docs", "./chromadb")
+    load_dotenv()
+    embedding = OpenAIEmbeddings(model="text-embedding-3-small")
+    db = ChromaVectorDB(embedding, "research_docs", "../chromadb")

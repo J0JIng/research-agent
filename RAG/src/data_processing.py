@@ -1,6 +1,7 @@
 import re
 import fitz
 from pathlib import Path
+from abc import ABC, abstractmethod
 
 from langdetect import detect
 from langchain_core.documents import Document
@@ -8,13 +9,27 @@ from langchain_community.document_loaders import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.schema import Document
 
-class PDFPreprocessor:
+class BasePreprocessor(ABC):
+
+    @abstractmethod
+    def generate_documents(self) -> list[Document] | None:
+        pass
+
+    @abstractmethod    
+    def generate_chunks(self) -> list[Document] | None:
+        pass
+
+    @abstractmethod
+    def run(self) -> None:
+        pass
+
+class PDFPreprocessor(BasePreprocessor):
     def __init__(self, raw_dir: Path, cleaned_dir: Path):
         self.raw_dir = raw_dir
         self.cleaned_dir = cleaned_dir
         self.cleaned_dir.mkdir(exist_ok=True)
 
-    def pre_process_pdf_documents(self) -> None:
+    def pre_process_documents(self) -> None:
         for pdf_file in self.raw_dir.glob("*.pdf"):
             doc = fitz.open(pdf_file)
             for i, page in enumerate(doc, start=1):
@@ -63,14 +78,14 @@ class PDFPreprocessor:
 
     def run(self) -> list[Document]:
         # Uncomment if preprocessing PDFs (adding page numbers)
-        # self.pre_process_pdf_documents()
+        # self.pre_process_documents()
         docs = self.generate_documents()
         docs = self.post_process_documents(docs)
         chunks = self.generate_chunks(docs)
         docs = self.post_process_chunk(chunks)
         return docs
 
-def main():
+if __name__ == "__main__":
     raw_dir = Path("../data/raw")
     cleaned_dir = Path("../data/cleaned")
     cleaned_dir.mkdir(exist_ok=True)
@@ -79,6 +94,3 @@ def main():
     docs = preprocessor.run()
     print(docs[10].metadata)
     print(docs[10].page_content)
-
-if __name__ == "__main__":
-    main()
