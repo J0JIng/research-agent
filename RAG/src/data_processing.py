@@ -86,8 +86,9 @@ class PDFPreprocessor(BasePreprocessor):
         return docs
 
 if __name__ == "__main__":
-    raw_dir = Path("../data/raw")
-    cleaned_dir = Path("../data/cleaned")
+    # for pdf docs 
+    raw_dir = Path("../data/pdf/raw")
+    cleaned_dir = Path("../data/pdf/cleaned")
     cleaned_dir.mkdir(exist_ok=True)
 
     preprocessor = PDFPreprocessor(raw_dir, cleaned_dir)
