@@ -62,7 +62,8 @@ class PDFPreprocessor(BasePreprocessor):
         return documents
 
     def post_process_chunk(self, documents: list[Document]) -> list[Document]:
-        return [doc for doc in documents if len(doc.page_content.strip()) > 50]
+        documents = [doc for doc in documents if len(doc.page_content.strip()) > 50]
+        return documents
 
     def generate_chunks(self, documents: list[Document]) -> list[Document]:
         splitter = RecursiveCharacterTextSplitter(
