@@ -57,3 +57,7 @@ with get_openai_callback() as cb:
         print("Error parsing response", e, "Raw Response - ", raw_response)
     finally:
         print(cb)
+
+
+class ResearchAgent :
+    pass
