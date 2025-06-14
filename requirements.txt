@@ -1,0 +1,15 @@
+langchain
+langchain-anthropic
+langchain-chroma>=0.1.2
+langchain-community
+langchain-huggingface
+langchain_core
+langchain-openai
+langdetect
+pydantic
+pymupdf
+pypdf
+python-dotenv
+sentence_transformers
+wikipedia
+langgraph

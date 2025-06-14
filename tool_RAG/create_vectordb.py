@@ -22,6 +22,7 @@ if __name__ == "__main__":
     embedding_model = OpenAIEmbeddings(model="text-embedding-3-small")
     
     # process docs 
+    print("=== Process ===")
     preprocessor = PDFPreprocessor(raw_dir, cleaned_dir)
     documents = preprocessor.run()
 
@@ -30,7 +31,8 @@ if __name__ == "__main__":
     print(uuids)
     
     # store
-    chromaDB = ChromaVectorDB(embedding_model, "research_docs", "./chromadb")
+    print("=== store ===")
+    chromaDB = ChromaVectorDB(embedding_model, "research_docs", "../chromadb")
     chromaDB.store(uuids=uuids, documents=documents)
 
     # query 
@@ -44,3 +46,5 @@ if __name__ == "__main__":
         print('\n')
         print(doc.page_content)
         print("======"*10)
+
+    print("=== complete ===")
